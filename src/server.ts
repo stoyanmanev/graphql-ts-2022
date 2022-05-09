@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "express-jwt";
 import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground  } from "apollo-server-core";
 import "reflect-metadata";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -53,7 +53,8 @@ async function startApolloServer() {
 
   const server = new ApolloServer({
     schema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageGraphQLPlayground()],
     introspection: true,
     context: ({ req }) => {
       const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
